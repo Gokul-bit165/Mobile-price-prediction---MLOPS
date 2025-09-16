@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/gokul/Mobile_price_prediction-MLOPS/mobile_price_prediction/mlruns/591953631782566812/models/m-facc2471276842b6aed636bd3054fd14/artifacts
+creation_timestamp: 1758004226767
+experiment_id: '591953631782566812'
+last_updated_timestamp: 1758004247053
+model_id: m-facc2471276842b6aed636bd3054fd14
+model_type: null
+name: LogisticRegression_model
+source_run_id: ba90e1edfa334fa69d18ac52fa929ad2
+status: 2
+status_message: null

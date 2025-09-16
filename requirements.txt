@@ -1,6 +1,8 @@
 pandas
 numpy
 scikit-learn
-mlflow
-pyyaml
 joblib
+mlflow
+gradio
+pytest
+flake8

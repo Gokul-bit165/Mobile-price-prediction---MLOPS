@@ -6,13 +6,15 @@ from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
 MODELS = {
-    "logreg": LogisticRegression(max_iter=200),
-    "rf": RandomForestClassifier(n_estimators=100),
-    "svm": SVC()
+    "LogisticRegression": LogisticRegression(max_iter=200),
+    "RandomForest": RandomForestClassifier(n_estimators=200, random_state=42),
+    "SVM": SVC(probability=True)
 }
 
-def train_multiple(X_train, y_train, X_val, y_val):
+def train_multiple(X_train, y_train, X_val, y_val, experiment_name="MobilePricePrediction"):
+    mlflow.set_experiment(experiment_name)
     results = {}
+
     for name, model in MODELS.items():
         with mlflow.start_run(run_name=name):
             model.fit(X_train, y_train)
@@ -20,7 +22,8 @@ def train_multiple(X_train, y_train, X_val, y_val):
             acc = accuracy_score(y_val, preds)
 
             mlflow.log_metric("accuracy", acc)
-            mlflow.sklearn.log_model(model, "model")
+            mlflow.sklearn.log_model(model, name=f"{name}_model")
 
-            results[name] = acc
+            results[name] = {"model": model, "accuracy": acc}
+
     return results

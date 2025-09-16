@@ -1,27 +1,24 @@
+# src/train.py
+import os
+import joblib
 import mlflow
 import mlflow.sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-import joblib
-import os
 
-def train_model(X_train, y_train, X_val, y_val, artifacts_dir="artifacts"):
-    with mlflow.start_run():
-        # Model
-        model = LogisticRegression(max_iter=200)
+def train_model(X_train, y_train, X_val, y_val, artifacts_dir="artifacts", experiment_name="MobilePricePrediction"):
+    os.makedirs(artifacts_dir, exist_ok=True)
+    mlflow.set_experiment(experiment_name)
+    with mlflow.start_run(run_name="LogisticRegression"):
+        model = LogisticRegression(max_iter=500)
         model.fit(X_train, y_train)
 
-        # Validation metrics
         preds = model.predict(X_val)
         acc = accuracy_score(y_val, preds)
-        mlflow.log_metric("accuracy", acc)
+        mlflow.log_metric("accuracy", float(acc))
 
-        # Log model
-        mlflow.sklearn.log_model(model, name="model")
-
-
-        # Save locally
-        os.makedirs(artifacts_dir, exist_ok=True)
+        mlflow.sklearn.log_model(model, name="LogisticRegression")
         joblib.dump(model, os.path.join(artifacts_dir, "best_model.pkl"))
+        print(f"Saved LogisticRegression to {artifacts_dir}/best_model.pkl (acc {acc:.4f})")
 
     return model, acc
