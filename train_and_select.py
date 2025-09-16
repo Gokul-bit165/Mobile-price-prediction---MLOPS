@@ -24,7 +24,7 @@ def train_and_select(X_train, y_train, X_val, y_val, artifacts_dir="artifacts", 
 
     for name, model in MODELS.items():
         print(f"\nTraining {name}...")
-        mlflow.sklearn.autolog()  # autolog for each run
+        mlflow.autolog()  # autolog for each run
 
         with mlflow.start_run(run_name=name):
             model.fit(X_train, y_train)

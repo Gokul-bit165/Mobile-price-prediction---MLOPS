@@ -1,5 +1,5 @@
 import mlflow
-import mlflow.sklearn
+from mlflow import sklearn as mlflow_sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
@@ -21,8 +21,8 @@ def train_multiple(X_train, y_train, X_val, y_val, experiment_name="MobilePriceP
             preds = model.predict(X_val)
             acc = accuracy_score(y_val, preds)
 
-            mlflow.log_metric("accuracy", acc)
-            mlflow.sklearn.log_model(model, name=f"{name}_model")
+            mlflow.log_metric("accuracy", float(acc))
+            mlflow_sklearn.log_model(model, artifact_path=f"{name}_model")
 
             results[name] = {"model": model, "accuracy": acc}
 
