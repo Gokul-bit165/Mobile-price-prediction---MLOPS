@@ -42,4 +42,5 @@ def train_and_select(X_train, y_train, X_val, y_val, artifacts_dir="artifacts", 
     joblib.dump(best_model, model_path)
     print(f"\nBest model: {best_model_name} with accuracy {best_acc:.4f}")
     print(f"Saved to {model_path}")
-    return best_model, best_model_name
+    return best_model, best_model_name 
+
