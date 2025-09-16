@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/gokul/Mobile_price_prediction-MLOPS/mobile_price_prediction/mlruns/591953631782566812/a34489b815ec45729605f516c0e917a9/artifacts
+end_time: 1758016468523
+entry_point_name: ''
+experiment_id: '591953631782566812'
+lifecycle_stage: active
+run_id: a34489b815ec45729605f516c0e917a9
+run_name: SVM
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758016460095
+status: 3
+tags: []
+user_id: gokul

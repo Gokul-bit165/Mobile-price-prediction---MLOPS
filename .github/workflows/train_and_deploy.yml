@@ -1,4 +1,3 @@
-# .github/workflows/train_and_deploy.yml
 name: Train & Deploy
 
 on:
@@ -10,7 +9,7 @@ jobs:
   train-build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -25,40 +24,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run training pipeline (produce artifacts/best_model.pkl)
+      - name: Train models
         run: |
           python run_experiment.py
 
-      - name: List artifacts (debug)
+      - name: Verify artifact
         run: ls -la artifacts || true
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}
-
-      - name: Build & push Docker image to GHCR
-        env:
-          IMAGE: ghcr.io/${{ github.repository_owner }}/mobile-price-prediction:${{ github.sha }}
-        run: |
-          docker build -t $IMAGE .
-          docker push $IMAGE
 
       - name: Deploy to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          set -e
-          git clone https://$HF_TOKEN@huggingface.co/spaces/<HF_USERNAME>/<SPACE_NAME>.git hf_space || true
-          cp app.py hf_space/ || true
-          cp requirements.txt hf_space/ || true
+          git clone https://$HF_TOKEN@huggingface.co/spaces/GokulV/Mobile_price_prediction.git hf_space
+          cp app.py hf_space/
+          cp requirements.txt hf_space/
           mkdir -p hf_space/artifacts
-          cp -v artifacts/best_model.pkl hf_space/artifacts/ || true
+          cp artifacts/best_model.pkl hf_space/artifacts/
           cd hf_space
-          git add -A
-          git config user.email "github-actions@users.noreply.github.com"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git commit -m "Deploy model from commit $GITHUB_SHA" || echo "No changes to commit"
-          git push origin main || echo "Push to HF Space failed"
+          git add -A
+          git commit -m "Deploy model update from commit $GITHUB_SHA" || echo "No changes"
+          git push origin main

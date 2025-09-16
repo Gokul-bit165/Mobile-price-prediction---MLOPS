@@ -1,10 +1,9 @@
-# .github/workflows/ci.yml
 name: CI - Lint, Test, Build
 
 on:
   pull_request:
   push:
-    branches: ["**"]
+    branches: [ "**" ]
 
 jobs:
   build-and-test:

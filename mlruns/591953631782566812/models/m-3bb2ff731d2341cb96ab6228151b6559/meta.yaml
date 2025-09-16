@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/gokul/Mobile_price_prediction-MLOPS/mobile_price_prediction/mlruns/591953631782566812/models/m-3bb2ff731d2341cb96ab6228151b6559/artifacts
+creation_timestamp: 1758016461290
+experiment_id: '591953631782566812'
+last_updated_timestamp: 1758016468497
+model_id: m-3bb2ff731d2341cb96ab6228151b6559
+model_type: null
+name: SVM_model
+source_run_id: a34489b815ec45729605f516c0e917a9
+status: 2
+status_message: null
