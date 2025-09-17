@@ -29,6 +29,8 @@ jobs:
       - name: Run tests
         run: |
           pip install pytest
+          # ✅ Ensure repo root is in PYTHONPATH so app.py and src/ are importable
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
           pytest tests -q
 
       - name: Build Docker (smoke)

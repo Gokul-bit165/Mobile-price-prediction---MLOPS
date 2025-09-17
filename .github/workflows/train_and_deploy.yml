@@ -44,7 +44,7 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git clone https://$HF_TOKEN@huggingface.co/spaces/GokulV/Mobile_price_prediction.git hf_space
+          git clone https://GokulV:$HF_TOKEN@huggingface.co/spaces/GokulV/Mobile_price_prediction.git hf_space
           cp app.py hf_space/
           cp requirements.txt hf_space/
           mkdir -p hf_space/artifacts
